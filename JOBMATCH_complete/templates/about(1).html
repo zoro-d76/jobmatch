@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}About the Creator{% endblock %}
+{% block content %}
+<section class="about-creator">
+  <div class="about-kicker">THE PERSON BEHIND THE PLATFORM</div>
+  <div class="about-profile">
+    <div class="about-avatar" aria-hidden="true">EO</div>
+    <div>
+      <h1>Meet the Creator</h1>
+      <h2>Emmanuel Owino Okumu</h2>
+      <p class="about-role">Founder &amp; Developer of JOBMATCH</p>
+      <p class="about-location">Nairobi, Kenya</p>
+    </div>
+  </div>
+  <div class="about-copy">
+    <p>Emmanuel Owino Okumu is a young aspiring software developer from Nairobi, Kenya.</p>
+    <p>He is the founder and creator of <strong>JOBMATCH</strong>, a digital platform designed to connect job seekers with employers through technology.</p>
+    <p>His vision is to use software development and innovation to make job opportunities easier to discover and access.</p>
+    <p>Through JOBMATCH, Emmanuel aims to demonstrate how technology can help solve real-world challenges and create opportunities for people.</p>
+  </div>
+  <div class="about-facts">
+    <div><span>PROJECT</span><strong>JOBMATCH</strong></div>
+    <div><span>ROLE</span><strong>Founder &amp; Developer</strong></div>
+    <div><span>BASED IN</span><strong>Nairobi, Kenya</strong></div>
+  </div>
+  <a class="btn" href="{{ url_for('jobs') }}">Explore opportunities</a>
+</section>
+{% endblock %}
