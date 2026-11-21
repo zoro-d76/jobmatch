@@ -1,0 +1,6 @@
+*.pyc
+__pycache__/
+.venv/
+jobmatch.db
+instance/uploads/*
+!instance/uploads/.gitkeep

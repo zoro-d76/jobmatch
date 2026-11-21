@@ -1,0 +1,14 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}JOBMATCH{% endblock %} | JOBMATCH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}"></head><body>
+<header class="navbar"><a class="brand" href="{{ url_for('index') }}"><span class="brand-mark">J</span> JOBMATCH</a>
+<a href="{{ url_for('about') }}">About</a>
+</nav><a href="{{ url_for('jobs') }}">Find jobs</a>
+{% if session.get('user_id') %}{% if session.get('role')=='admin' %}<a href="{{ url_for('admin_dashboard') }}">Admin</a>{% else %}<a href="{{ url_for('dashboard') }}">Dashboard</a>{% endif %}
+<a href="{{ url_for('notifications') }}">Notifications{% if unread_count %}<b class="count">{{ unread_count }}</b>{% endif %}</a>
+{% if session.get('role')=='employer' %}<a class="nav-cta" href="{{ url_for('new_job') }}">Post a job</a>{% endif %}<a href="{{ url_for('logout') }}">Sign out</a>
+{% else %}<a href="{{ url_for('login') }}">Sign in</a><a class="nav-cta" href="{{ url_for('register') }}">Get started</a>{% endif %}</nav></header>
+<main class="page">{% with messages=get_flashed_messages(with_categories=true) %}{% if messages %}<div class="alerts">{% for category,message in messages %}<div class="alert {{ category }}">{{ message }}</div>{% endfor %}</div>{% endif %}{% endwith %}{% block content %}{% endblock %}</main>
+<footer><div class="footer-inner"><a class="brand" href="{{ url_for('index') }}"><span class="brand-mark">J</span> JOBMATCH</a><span>Skills-first connections. Better opportunities.</span><span>© 2026 JOBMATCH</span></div></footer></body></html>
