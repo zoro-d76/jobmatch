@@ -10,8 +10,152 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        /* JOBMATCH OPPORTUNITY GATEWAY */
+
+        .jobmatch-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 22px;
+            padding: 24px;
+            background: #102D25;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity .65s ease, visibility .65s ease;
+        }
+
+        .jobmatch-loader.is-hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .gateway-logo-wrap {
+            width: 104px;
+            height: 104px;
+            display: grid;
+            place-items: center;
+            border-radius: 28px;
+            background: #D9F36A;
+            box-shadow: 0 0 55px rgba(217,243,106,.15);
+            animation: gatewayReveal .9s ease both,
+                       gatewayFloat 2.8s ease-in-out infinite;
+        }
+
+        .gateway-logo {
+            width: 82px;
+            height: 82px;
+            object-fit: contain;
+        }
+
+        .gateway-title {
+            color: #fff;
+            font-family: 'Manrope', sans-serif;
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            margin: 0;
+        }
+
+        .gateway-title span {
+            color: #D9F36A;
+        }
+
+        .gateway-message {
+            min-height: 24px;
+            color: #DDE8E1;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            text-align: center;
+            letter-spacing: .4px;
+            margin: 0;
+            transition: opacity .3s ease;
+        }
+
+        .gateway-track {
+            width: min(280px, 75vw);
+            height: 4px;
+            overflow: hidden;
+            border-radius: 20px;
+            background: rgba(255,255,255,.16);
+        }
+
+        .gateway-track span {
+            display: block;
+            width: 38%;
+            height: 100%;
+            border-radius: inherit;
+            background: #D9F36A;
+            animation: gatewayProgress 1.5s ease-in-out infinite;
+        }
+
+        .gateway-caption {
+            color: rgba(255,255,255,.5);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        @keyframes gatewayReveal {
+            from { opacity: 0; transform: scale(.7) rotate(-12deg); }
+            to { opacity: 1; transform: scale(1) rotate(0); }
+        }
+
+        @keyframes gatewayFloat {
+            0%, 100% { translate: 0 0; }
+            50% { translate: 0 -9px; }
+        }
+
+        @keyframes gatewayProgress {
+            0% { transform: translateX(-110%); }
+            100% { transform: translateX(290%); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .gateway-logo-wrap,
+            .gateway-track span {
+                animation: none;
+            }
+
+            .jobmatch-loader {
+                transition: none;
+            }
+        }
+    </style>
 </head>
+
 <body>
+
+<!-- JOBMATCH OPPORTUNITY GATEWAY -->
+<div class="jobmatch-loader" id="jobmatchLoader"
+     role="status" aria-label="Loading JOBMATCH">
+
+    <div class="gateway-logo-wrap">
+        <img
+            src="{{ url_for('static', filename='jobmatch-logo.svg') }}"
+            alt="JOBMATCH"
+            class="gateway-logo">
+    </div>
+
+    <h1 class="gateway-title">JOB<span>MATCH</span></h1>
+
+    <p class="gateway-message" id="gatewayMessage">
+        Connecting talent with opportunity
+    </p>
+
+    <div class="gateway-track">
+        <span></span>
+    </div>
+
+    <div class="gateway-caption">Your future starts here</div>
+</div>
 
 <header class="navbar">
     <a class="brand" href="{{ url_for('index') }}">
@@ -73,6 +217,91 @@
         <span>© 2026 JOBMATCH</span>
     </div>
 </footer>
+
+<script>
+(function () {
+    const loader = document.getElementById('jobmatchLoader');
+    const message = document.getElementById('gatewayMessage');
+
+    if (!loader) return;
+
+    const messages = [
+        'Connecting talent with opportunity',
+        'Discovering new possibilities',
+        'Showcasing your potential',
+        'Opening doors to your future'
+    ];
+
+    let messageIndex = 0;
+    let messageTimer;
+
+    function hideLoader() {
+        loader.classList.add('is-hidden');
+
+        if (messageTimer) {
+            clearInterval(messageTimer);
+        }
+    }
+
+    function showLoader() {
+        loader.classList.remove('is-hidden');
+    }
+
+    function startMessages() {
+        messageTimer = setInterval(function () {
+            message.style.opacity = '0';
+
+            setTimeout(function () {
+                messageIndex = (messageIndex + 1) % messages.length;
+                message.textContent = messages[messageIndex];
+                message.style.opacity = '1';
+            }, 250);
+        }, 1800);
+    }
+
+    startMessages();
+
+    window.addEventListener('load', hideLoader);
+    window.addEventListener('pageshow', hideLoader);
+
+    if (document.readyState === 'complete') {
+        hideLoader();
+    }
+
+    document.addEventListener('click', function (event) {
+        const link = event.target.closest('a');
+
+        if (!link || event.defaultPrevented) return;
+        if (event.button !== 0) return;
+
+        if (
+            event.metaKey || event.ctrlKey ||
+            event.shiftKey || event.altKey ||
+            link.target === '_blank' ||
+            link.hasAttribute('download')
+        ) return;
+
+        const url = new URL(link.href, window.location.href);
+
+        if (url.origin !== window.location.origin) return;
+
+        if (
+            url.pathname === window.location.pathname &&
+            url.search === window.location.search &&
+            url.hash
+        ) return;
+
+        showLoader();
+    });
+
+    document.addEventListener('submit', function (event) {
+        if (!event.defaultPrevented) {
+            showLoader();
+        }
+    });
+
+})();
+</script>
 
 </body>
 </html>
