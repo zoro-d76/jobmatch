@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 88" role="img" aria-labelledby="title desc">
+  <title id="title">JOBMATCH</title>
+  <desc id="desc">A lime briefcase and swoosh inside a forest-green rounded square, followed by the JOBMATCH wordmark.</desc>
+  <rect x="4" y="4" width="80" height="80" rx="22" fill="#176B50"/>
+  <g fill="none" stroke="#D9F36A" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M31 29v-6a7 7 0 0 1 7-7h12a7 7 0 0 1 7 7v6"/>
+    <rect x="19" y="29" width="50" height="37" rx="7"/>
+    <path d="M19 43h50M39 42v7h10v-7"/>
+    <path d="M16 67c14 5 36-1 57-30"/>
+  </g>
+  <text x="103" y="57" font-family="Manrope, Arial, sans-serif" font-size="39" font-weight="800" letter-spacing="-1.7" fill="#17231F">JOB<tspan fill="#176B50">MATCH</tspan></text>
+</svg>
