@@ -14,10 +14,15 @@ with app.app_context():
             "SELECT id FROM admins WHERE email = ?", (email,)
         ).fetchone()
 
-        if not admin:
+        if admin:
+            connection.execute(
+                "UPDATE admins SET password_hash = ? WHERE email = ?",
+                (generate_password_hash(password), email)
+            )
+        else:
             connection.execute(
                 "INSERT INTO admins (email, password_hash) VALUES (?, ?)",
                 (email, generate_password_hash(password))
             )
-            connection.commit()
 
+        connection.commit()
